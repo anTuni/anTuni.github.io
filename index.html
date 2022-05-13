@@ -35,12 +35,19 @@
             display:none;
             position: absolute;
             top: 0;
+            flex-direction: column;
         }
         .selected.container #random{
             max-width: 300px;
         }
         .selected.container.visible{
             display:flex;
+        }
+        .btn-text{
+            font-size: 60px;
+            transform: rotateZ(45deg);
+            color: #fff;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -66,14 +73,18 @@
             <img src="https://hjchurch.net/assets/images/lafocard/relationship/relationship%20(1).JPG" width="90%">
         </div> 
     </div>
-    <div class="selected container" id ="selected_container" onclick="closePopup();">
-        <div class="random-card">
+    <div class="selected container" id ="selected_container" >
+        <div class="random-card" onclick="randomSrc();">
             <img id= "random" src="" loading="lazy"/>
+        </div>
+        <div class="flex">
+            <div class="btn-text" onclick="closePopup();">+</div>
         </div>
     </div>
 </body>
 <script type="text/javascript">
     const assetsDir = "/assets/images/lafocard";
+    var currentKey= '';
     const cards = {
         "character":["character (0).jpg","character (1).jpg","character (10).jpg","character (11).jpg","character (12).jpg","character (13).jpg","character (14).jpg","character (15).jpg","character (16).jpg","character (17).jpg","character (18).jpg","character (19).jpg","character (2).jpg","character (20).jpg","character (21).jpg","character (22).jpg","character (23).jpg","character (24).jpg","character (25).jpg","character (26).jpg","character (27).jpg","character (28).jpg","character (29).jpg","character (3).jpg","character (30).jpg","character (31).jpg","character (32).jpg","character (33).jpg","character (34).jpg","character (35).jpg","character (36).jpg","character (37).jpg","character (38).jpg","character (4).jpg","character (5).jpg","character (6).jpg","character (7).jpg","character (8).jpg","character (9).jpg"],
         "if":["if (1).jpg","if (10).jpg","if (11).jpg","if (12).jpg","if (13).jpg","if (14).jpg","if (15).jpg","if (16).jpg","if (17).jpg","if (18).jpg","if (19).jpg","if (2).jpg","if (20).jpg","if (21).jpg","if (22).jpg","if (23).jpg","if (24).jpg","if (25).jpg","if (26).jpg","if (27).jpg","if (28).jpg","if (29).jpg","if (3).jpg","if (30).jpg","if (4).jpg","if (5).jpg","if (6).jpg","if (7).jpg","if (8).jpg","if (9).jpg"],
@@ -83,14 +94,18 @@
     }
 
     function renderRandomOne(key){
-        var url = `https://hjchurch.net/${assetsDir}/${key}/`
-        var deck = cards[key];
+        currentKey = key
+        randomSrc()
+        var imgPopUp = document.getElementById('selected_container')
+        imgPopUp.classList.add('visible')
+    }
+    function randomSrc(){
+        var url = `https://hjchurch.net/${assetsDir}/${currentKey}/`
+        var deck = cards[currentKey];
         var length = deck.length
         var randomIndex = Math.floor(Math.random() * length);
         var img = document.getElementById('random')
-        var imgPopUp = document.getElementById('selected_container')
         img.src = url+deck[randomIndex];
-        imgPopUp.classList.add('visible')
     }
     function closePopup(){
         var imgPopUp = document.getElementById('selected_container')
